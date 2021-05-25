@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.mobdeve.ragasam.ragasa_ramos_mp.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/safetyGuidelines"
+        android:name="com.mobdeve.ragasam.ragasa_ramos_mp.ui.gallery.GalleryFragment"
+        android:label="@string/menu_safety_guidelines"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/nav_contacts"
+        android:name="com.mobdeve.ragasam.ragasa_ramos_mp.ui.slideshow.SlideshowFragment"
+        android:label="@string/menu_contacts"
+        tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/nav_location"
+        android:name="com.mobdeve.ragasam.ragasa_ramos_mp.ui.location.LocationFragment"
+        android:label="@string/menu_location"
+        tools:layout="@layout/fragment_location" />
+    <fragment
+        android:id="@+id/nav_emergency_services"
+        android:name="com.mobdeve.ragasam.ragasa_ramos_mp.ui.emergencyServices.EmergencyServicesFragment"
+        android:label="@string/menu_emergency_services"
+        tools:layout="@layout/fragment_emergency_services" />
+</navigation>
