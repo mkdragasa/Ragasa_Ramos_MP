@@ -12,4 +12,5 @@
     <string name="menu_contacts">Contacts</string>
     <string name="menu_location">Location</string>
     <string name="menu_emergency_services">Emergency Services</string>
+    <string name="google_map_key">AIzaSyDhoEpXKV5qHSw1lpzmWHv6-uRH-GPa7sE</string>
 </resources>

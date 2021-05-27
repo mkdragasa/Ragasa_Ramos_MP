@@ -21,7 +21,7 @@
             android:icon="@drawable/location"
             android:title="@string/menu_location" />
         <item
-            android:id="@+id/emergency_services"
+            android:id="@+id/nav_emergency_services"
             android:icon="@drawable/emergency_guidelines"
             android:title="@string/menu_emergency_services" />
     </group>
