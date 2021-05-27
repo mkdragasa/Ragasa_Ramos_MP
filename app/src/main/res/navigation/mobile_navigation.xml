@@ -12,9 +12,9 @@
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/safetyGuidelines"
-        android:name="com.mobdeve.ragasam.ragasa_ramos_mp.ui.gallery.GalleryFragment"
+        android:name="com.mobdeve.ragasam.ragasa_ramos_mp.ui.guidelines.GuidelinesFragment"
         android:label="@string/menu_safety_guidelines"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_guidelines" />
 
     <fragment
         android:id="@+id/nav_contacts"

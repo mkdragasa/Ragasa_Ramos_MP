@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mobdeve.ragasam.ragasa_ramos_mp.R;
-import com.mobdeve.ragasam.ragasa_ramos_mp.ui.gallery.GalleryViewModel;
 
 public class LocationFragment extends Fragment {
 
