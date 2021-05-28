@@ -16,12 +16,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ragasa_Ramos_MP">
+        <activity android:name=".EmergencyServicesSettings"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_map_key"/>
+            android:value="@string/google_map_key" />
 
-        <activity android:name=".SafetyGuidelines"></activity>
+        <activity android:name=".SafetyGuidelines" />
         <activity
             android:name=".NavigationBar"
             android:label="@string/title_activity_navigation_bar"

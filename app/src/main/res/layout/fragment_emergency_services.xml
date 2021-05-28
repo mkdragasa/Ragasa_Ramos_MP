@@ -5,19 +5,115 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.emergencyServices.EmergencyServicesFragment" >
+    tools:context=".ui.guidelines.GuidelinesFragment" >
 
     <TextView
-        android:id="@+id/text_emergency_services"
-        android:layout_width="match_parent"
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
+        android:text="Call Emergency Services"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/ib_fire"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintVertical_bias="0.489" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="8dp"
+        android:text="Fire"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ib_fire" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="80dp"
+        android:text="Police"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ib_earthquake" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Hospital"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ib_flood" />
+
+    <ImageButton
+        android:id="@+id/ib_fire"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginBottom="432dp"
+        android:background="@drawable/custom_button"
+        android:clickable="true"
+        android:contextClickable="true"
+        android:longClickable="false"
+        android:padding="25dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/fire"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/ib_flood"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginBottom="208dp"
+        android:background="@drawable/custom_button"
+        android:clickable="true"
+        android:contextClickable="true"
+        android:padding="25dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/red_cross"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/ib_earthquake"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="432dp"
+        android:background="@drawable/custom_button"
+        android:clickable="true"
+        android:contextClickable="true"
+        android:padding="25dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/police"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btn_settings"
+        android:layout_width="127dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="76dp"
+        android:text="Settings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_Hospital"
+        android:layout_width="397dp"
+        android:layout_height="121dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="3dp"
+        android:background="#E8E5E5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_Fire">
+
+        <TextView
+            android:id="@+id/tv2"
+            android:layout_width="298dp"
+            android:layout_height="26dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Hospital"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="4dp"
+            android:text="Number:"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv2" />
+
+        <TextView
+            android:id="@+id/tv_HospitalNum"
+            android:layout_width="266dp"
+            android:layout_height="21dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="27dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv2" />
+
+        <Button
+            android:id="@+id/btn_HospitalAction"
+            android:layout_width="93dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="76dp"
+            android:layout_marginTop="6dp"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_HospitalNum" />
+
+        <Button
+            android:id="@+id/btn_HospitalDefault"
+            android:layout_width="125dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="82dp"
+            android:text="Set as Default"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_HospitalNum" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_Police"
+        android:layout_width="397dp"
+        android:layout_height="121dp"
+        android:background="#E8E5E5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="298dp"
+            android:layout_height="26dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Police Department"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="8dp"
+            android:text="Number:"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv1" />
+
+        <TextView
+            android:id="@+id/tv_policeNum"
+            android:layout_width="266dp"
+            android:layout_height="21dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="27dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv1" />
+
+        <Button
+            android:id="@+id/btn_FireAction"
+            android:layout_width="93dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="76dp"
+            android:layout_marginTop="12dp"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView1" />
+
+        <Button
+            android:id="@+id/btn_FireDefault"
+            android:layout_width="125dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="82dp"
+            android:text="Set as Default"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_policeNum" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_Default"
+        android:layout_width="397dp"
+        android:layout_height="121dp"
+        android:layout_marginTop="15dp"
+        android:background="#E8E5E5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_Hospital">
+
+        <TextView
+            android:id="@+id/tv3"
+            android:layout_width="298dp"
+            android:layout_height="26dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Default Number"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="4dp"
+            android:text="Number:"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv3" />
+
+        <TextView
+            android:id="@+id/tv_DefaultNum"
+            android:layout_width="266dp"
+            android:layout_height="21dp"
+            android:layout_marginEnd="24dp"
+            android:text="911"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="38dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_Fire"
+        android:layout_width="397dp"
+        android:layout_height="121dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="3dp"
+        android:background="#E8E5E5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_Police">
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="298dp"
+            android:layout_height="26dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Fire Department"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="8dp"
+            android:text="Number:"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv" />
+
+        <TextView
+            android:id="@+id/tv_fireNum"
+            android:layout_width="266dp"
+            android:layout_height="21dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/textView6"
+            app:layout_constraintTop_toBottomOf="@+id/tv" />
+
+        <Button
+            android:id="@+id/btn_PoliceAction"
+            android:layout_width="93dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="76dp"
+            android:layout_marginTop="6dp"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_fireNum" />
+
+        <Button
+            android:id="@+id/btn_Policedefault"
+            android:layout_width="125dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="60dp"
+            android:text="Set as Default"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.481"
+            app:layout_constraintStart_toEndOf="@+id/btn_PoliceAction"
+            app:layout_constraintTop_toBottomOf="@+id/tv_fireNum" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
