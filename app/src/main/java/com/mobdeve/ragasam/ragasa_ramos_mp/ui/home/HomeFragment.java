@@ -22,10 +22,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.mobdeve.ragasam.ragasa_ramos_mp.Authority;
 import com.mobdeve.ragasam.ragasa_ramos_mp.MyDatabaseHelper;
@@ -38,6 +41,12 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.mobdeve.ragasam.ragasa_ramos_mp.SafetyGuidelines;
+import com.mobdeve.ragasam.ragasa_ramos_mp.ui.contacts.Contacts;
+import com.mobdeve.ragasam.ragasa_ramos_mp.ui.contacts.ContactsFragment;
+import com.mobdeve.ragasam.ragasa_ramos_mp.ui.emergencyServices.EmergencyServicesFragment;
+import com.mobdeve.ragasam.ragasa_ramos_mp.ui.guidelines.GuidelinesFragment;
+import com.mobdeve.ragasam.ragasa_ramos_mp.ui.location.LocationFragment;
 
 import java.util.List;
 import java.util.Locale;
@@ -52,6 +61,9 @@ public class HomeFragment extends Fragment {
     private Activity mActivity;
     private String emergencyNumber;
     private final String EMERGENCY_HOTLINE = "111"; // change to 911
+    private CardView contacts_cv, emergencyServices_cv,guidelines_cv, location_cv;
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
@@ -79,6 +91,10 @@ public class HomeFragment extends Fragment {
     private void initializeViews(View root) {
         ib_call = root.findViewById(R.id.ib_call);
         ib_text = root.findViewById(R.id.ib_text);
+        contacts_cv = root.findViewById(R.id.cv_Contacts);
+        emergencyServices_cv = root.findViewById(R.id.cv_EmergencyServices);
+        guidelines_cv = root.findViewById(R.id.cv_SafetyGuidelines);
+        location_cv = root.findViewById(R.id.cv_Location);
     }
 
     private void storeData(){
@@ -104,6 +120,39 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 callNumber();
+            }
+        });
+
+        contacts_cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(HomeFragment.this)
+                        .navigate(R.id.nav_contacts);
+
+            }
+        });
+
+        emergencyServices_cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(HomeFragment.this)
+                        .navigate(R.id.nav_emergency_services);
+            }
+        });
+
+        guidelines_cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(HomeFragment.this)
+                        .navigate(R.id.safetyGuidelines);
+            }
+        });
+
+        location_cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(HomeFragment.this)
+                        .navigate(R.id.nav_location);
             }
         });
     }
