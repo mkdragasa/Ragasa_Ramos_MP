@@ -1,16 +1,23 @@
 package com.mobdeve.ragasam.ragasa_ramos_mp;
 
-/*
-@Entity(tableName = "messages_table")
-public class Message {
-    @PrimaryKey(autoGenerate = true)
-    public long messageId;
-    @NonNull
+public class Message{
+    String id;
     String content;
+    boolean shareLocation;
 
-    public Message(@NonNull String content) {
+    public Message(String id, String content, boolean shareLocation) {
+        this.id = id;
         this.content = content;
+        this.shareLocation = shareLocation;
     }
 
-    public String getContent(){return this.content;}
-}*/
+    public void updateContent(String content){this.content = content;}
+
+    public void updateShareLocation(boolean shareLocation){this.shareLocation = shareLocation;}
+
+    public String getMessageID(){return this.id;}
+
+    public String getMessageContent(){return this.content;}
+
+    public boolean getShareLocation(){return this.shareLocation;}
+}

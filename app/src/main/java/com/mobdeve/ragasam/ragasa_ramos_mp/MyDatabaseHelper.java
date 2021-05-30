@@ -12,7 +12,9 @@ import androidx.annotation.Nullable;
 
 class MyDatabaseHelper extends SQLiteOpenHelper {
 
+    //private static MyDatabaseHelper mDatabaseInstance = null;
     private Context context;
+
     private static final String DATABASE_NAME = "Safe.db";
     private static final int DATABASE_VERSION = 1;
 
@@ -22,55 +24,28 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_NUMBER = "authority_number";
     private static final String COLUMN_ISDEFAULT = "authority_isDefault";
 
-    MyDatabaseHelper(@Nullable Context context) {
+    /*
+    public static MyDatabaseHelper newInstance(Context context){
+        if (mDatabaseInstance == null){
+            mDatabaseInstance = new MyDatabaseHelper(context.getApplicationContext());
+        }
+        return mDatabaseInstance;
+    } */
+
+     MyDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.d("SafetyApp", "creating table..");
         String query = "CREATE TABLE " + TABLE_NAME +
                 " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_NAME + " TEXT, " +
                 COLUMN_NUMBER + " TEXT, " +
                 COLUMN_ISDEFAULT + " BOOLEAN);";
         db.execSQL(query);
-
-/*db.insert(TABLE_NAME,null, );
-        //add Police
-        db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-
-        cv.put(COLUMN_NAME, "Police");
-        cv.put(COLUMN_ISDEFAULT, false);
-        long result = db.insert(TABLE_NAME,null, cv);
-        if(result == -1){
-            Log.d("SafetyApp", "FAILED ADDING POLICE");
-        }else {
-            Log.d("SafetyApp", "SUCCESS IN ADDING POLICE");
-        }
-
-        //add Police
-        ContentValues cv2 = new ContentValues();
-        cv2.put(COLUMN_NAME, "Fire");
-        cv2.put(COLUMN_ISDEFAULT, false);
-        long result2 = db.insert(TABLE_NAME,null, cv);
-        if(result2 == -1){
-            Log.d("SafetyApp", "FAILED ADDING FIRE");
-        }else {
-            Log.d("SafetyApp", "SUCCESS IN ADDING FIRE");
-        }
-
-        //add Hospital
-        ContentValues cv3 = new ContentValues();
-        cv3.put(COLUMN_NAME, "Fire");
-        cv3.put(COLUMN_ISDEFAULT, false);
-        long result3 = db.insert(TABLE_NAME,null, cv);
-        if(result3 == -1){
-            Log.d("SafetyApp", "FAILED ADDING HOSPITAL");
-        }else {
-            Log.d("SafetyApp", "SUCCESS IN ADDING HOSPITAL");
-        }*/
 
     }
     @Override
@@ -80,7 +55,6 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
     long addAuthority(String name, String number, Boolean isDefault){
-        Log.d("SafetyApp", "adding in DB..Number "+number);
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -88,10 +62,8 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_NUMBER, number);
         cv.put(COLUMN_ISDEFAULT, isDefault);
         long result = db.insert(TABLE_NAME,null, cv);
-        if(result == -1){
-            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
-        }else {
-            Toast.makeText(context, "Added Successfully!", Toast.LENGTH_SHORT).show();
+        if(result != -1) {
+            Toast.makeText(context, "Successfully Added!", Toast.LENGTH_SHORT).show();
         }
 
         return result;
@@ -109,17 +81,13 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
     void updateAuthorityNumber(String row_id, String number){
-        Log.d("SafetyApp", "updating in DB..Number "+number);
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_NUMBER, number);
         long result = db.update(TABLE_NAME, cv, "_id=?", new String[]{row_id});
-        Log.d("SafetyApp", "updating in DB DONE.. "+result);
-        if(result == -1){
-            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
-        }else {
-            Toast.makeText(context, "Updated Successfully!", Toast.LENGTH_SHORT).show();
+        if(result != -1) {
+            Toast.makeText(context, "Successfully Updated!", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -130,22 +98,18 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
 
         cv.put(COLUMN_ISDEFAULT, isDefault);
         long result = db.update(TABLE_NAME, cv, "_id=?", new String[]{row_id});
-        if(result == -1){
-            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
-        }else {
-            Toast.makeText(context, "Updated Successfully!", Toast.LENGTH_SHORT).show();
+        if(result != -1) {
+            Toast.makeText(context, "Successfully Updated!", Toast.LENGTH_SHORT).show();
         }
 
     }
 
 
     boolean checkIfDataExists(String TableName, String column, String fieldValue) {
-        Log.d("SafetyApp", "ENTERED CHECK DB");
         String checkQuery = "SELECT " + column + " FROM " + TableName + " WHERE " + column + "= '" +fieldValue+"'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         cursor = db.rawQuery(checkQuery, null);
-        Log.d("SafetyApp", "CHECK CURSOR IN DB "+cursor.getCount());
         if(cursor.getCount() <= 0){
             cursor.close();
             return false;
@@ -153,6 +117,22 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         return true;
 
+    }
+
+    void updateRecords(String row_id, boolean isDefault){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(COLUMN_ISDEFAULT, isDefault);
+        long result = db.update(TABLE_NAME, cv, "_id!=?", new String[]{row_id});
+    }
+
+    void updateAllRecords(boolean isDefault){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(COLUMN_ISDEFAULT, isDefault);
+        long result = db.update(TABLE_NAME, cv, null, null);
     }
 
     void deleteOneRow(String row_id){

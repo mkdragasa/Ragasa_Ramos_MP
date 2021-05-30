@@ -24,7 +24,7 @@ import com.mobdeve.ragasam.ragasa_ramos_mp.R;
 import com.mobdeve.ragasam.ragasa_ramos_mp.SafetyGuidelines;
 
 public class EmergencyServicesFragment extends Fragment {
-
+   // MyDatabaseHelper myDB;
     Activity context;
     ImageButton fireBtn, earthquakeBtn, floodBtn;
     Button settingsBtn;
@@ -34,6 +34,7 @@ public class EmergencyServicesFragment extends Fragment {
         context = getActivity();
 
         View root = inflater.inflate(R.layout.fragment_emergency_services, container, false);
+      //  myDB = new MyDatabaseHelper(context);
 
 
         return root;
@@ -54,7 +55,7 @@ public class EmergencyServicesFragment extends Fragment {
         earthquakeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"Earthquake Button", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"Earthquake Button", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -63,7 +64,7 @@ public class EmergencyServicesFragment extends Fragment {
         floodBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"Flood Button", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"Flood Button", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -71,7 +72,7 @@ public class EmergencyServicesFragment extends Fragment {
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"Settings Button", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"Settings Button", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, EmergencyServicesSettings.class);
 
                 startActivity(intent);
