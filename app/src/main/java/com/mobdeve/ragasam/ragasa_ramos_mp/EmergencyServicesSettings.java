@@ -1,9 +1,12 @@
 package com.mobdeve.ragasam.ragasa_ramos_mp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
@@ -13,9 +16,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class EmergencyServicesSettings extends AppCompatActivity {
-
+    MyDatabaseHelper myDB;
+    ArrayList<Authority> authorityList;
     private TextView hospitalTv, policeTv, fireTv, defaultTv;
     private Button hospitalActionBtn, hospitalDefaultBtn, policeActionBtn, policeDefaultBtn, fireActionBtn,
             fireDefaultBtn, nationalDefaultBtn;
@@ -25,16 +32,16 @@ public class EmergencyServicesSettings extends AppCompatActivity {
     private final String ADD = "ADD";
     private final String EDIT = "EDIT";
 
-    private String numbers[];
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emergency_services_settings);
 
-        numbers = new String[]{"", "", ""};
-
+        authorityList = new ArrayList<>();
+        myDB = new MyDatabaseHelper(EmergencyServicesSettings.this);
+        Log.d("SafetyApp", "WELCOMEEE");
         init();
+        storeDataInArrays();
         setOnClickListeners();
 
         LinearLayout container = new LinearLayout(this);
@@ -46,7 +53,6 @@ public class EmergencyServicesSettings extends AppCompatActivity {
         editNum.setInputType(InputType.TYPE_CLASS_PHONE);
         editNum.setLayoutParams(lp);
         editNum.setWidth(15);
-
 
         container.addView(editNum, lp);
 
@@ -78,17 +84,37 @@ public class EmergencyServicesSettings extends AppCompatActivity {
                 editNum.setText(policeTv.getText());
                 setOLCDialog(policeTv, policeActionBtn, 0);
                 dialog.show();
+
             }
         });
 
         policeDefaultBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                defaultTv.setText(numbers[0]);
-                policeDefaultBtn.setEnabled(false);
-                nationalDefaultBtn.setEnabled(true);
-                fireDefaultBtn.setEnabled(true);
-                hospitalDefaultBtn.setEnabled(true);
+                int indexPolice = getPosition("Police");
+                if (myDB.checkIfDataExists("my_authority", "authority_name", "Police")){
+                    if (authorityList.get(indexPolice).getContactNo().length() == 0){
+                        Toast.makeText(EmergencyServicesSettings.this, "Enter phone number.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        String policeID = authorityList.get(indexPolice).getID();
+                        Log.d("SafetyApp", "updating in DB.." +policeID);
+                        myDB.updateAuthorityDefault(policeID, true);
+                        if(indexPolice != 3){
+                            Log.d("SafetyApp", "updating in array.." +indexPolice);
+                            updateDefault("Police");
+                            authorityList.get(indexPolice).updateIsDefault(true);
+                        }
+                        defaultTv.setText(authorityList.get(indexPolice).getContactNo());
+                        policeDefaultBtn.setEnabled(false);
+                        nationalDefaultBtn.setEnabled(true);
+                        fireDefaultBtn.setEnabled(true);
+                        hospitalDefaultBtn.setEnabled(true);
+                    }
+
+                } else {
+                    Toast.makeText(EmergencyServicesSettings.this, "Enter phone number.", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -104,11 +130,30 @@ public class EmergencyServicesSettings extends AppCompatActivity {
         fireDefaultBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                defaultTv.setText(numbers[1]);
-                fireDefaultBtn.setEnabled(false);
-                nationalDefaultBtn.setEnabled(true);
-                policeDefaultBtn.setEnabled(true);
-                hospitalDefaultBtn.setEnabled(true);
+                int indexFire = getPosition("Fire");
+                Log.d("SafetyApp", authorityList.get(0).getName());
+                if (myDB.checkIfDataExists("my_authority", "authority_name", "Fire")){
+                    if (authorityList.get(indexFire).getContactNo().length() == 0){
+                        Toast.makeText(EmergencyServicesSettings.this, "Enter phone number.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        String fireID = authorityList.get(indexFire).getID();
+                        Log.d("SafetyApp", "updating in DB.." +fireID);
+                        myDB.updateAuthorityDefault(fireID, true);
+                        if(indexFire != 3){
+                            Log.d("SafetyApp", "updating in array.." +indexFire);
+                            updateDefault("Fire");
+                            authorityList.get(indexFire).updateIsDefault(true);
+                        }
+                        defaultTv.setText(authorityList.get(indexFire).getContactNo());
+                        fireDefaultBtn.setEnabled(false);
+                        nationalDefaultBtn.setEnabled(true);
+                        policeDefaultBtn.setEnabled(true);
+                        hospitalDefaultBtn.setEnabled(true);
+                    }
+                } else {
+                    Toast.makeText(EmergencyServicesSettings.this, "Enter phone number.", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -125,11 +170,29 @@ public class EmergencyServicesSettings extends AppCompatActivity {
         hospitalDefaultBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                defaultTv.setText(numbers[2]);
-                hospitalDefaultBtn.setEnabled(false);
-                nationalDefaultBtn.setEnabled(true);
-                policeDefaultBtn.setEnabled(true);
-                fireDefaultBtn.setEnabled(true);
+                int indexHospital = getPosition("Hospital");
+                if (myDB.checkIfDataExists("my_authority", "authority_name", "Hospital")){
+                    if (authorityList.get(indexHospital).getContactNo().length() == 0){
+                        Toast.makeText(EmergencyServicesSettings.this, "Enter phone number.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        String hospitalID = authorityList.get(indexHospital).getID();
+                        Log.d("SafetyApp", "updating in DB.." +hospitalID);
+                        myDB.updateAuthorityDefault(hospitalID, true);
+                        if(indexHospital != 3){
+                            Log.d("SafetyApp", "updating in array.." +indexHospital);
+                            updateDefault("Hospital");
+                            authorityList.get(indexHospital).updateIsDefault(true);
+                        }
+                        defaultTv.setText(authorityList.get(indexHospital).getContactNo());
+                        hospitalDefaultBtn.setEnabled(false);
+                        nationalDefaultBtn.setEnabled(true);
+                        policeDefaultBtn.setEnabled(true);
+                        fireDefaultBtn.setEnabled(true);
+                    }
+                } else {
+                    Toast.makeText(EmergencyServicesSettings.this, "Please phone number first.", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -137,6 +200,7 @@ public class EmergencyServicesSettings extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 defaultTv.setText("911");
+                updateDefault("911");
                 nationalDefaultBtn.setEnabled(false);
                 policeDefaultBtn.setEnabled(true);
                 fireDefaultBtn.setEnabled(true);
@@ -150,14 +214,65 @@ public class EmergencyServicesSettings extends AppCompatActivity {
         dialog.setButton(DialogInterface.BUTTON_POSITIVE, "SAVE", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
                 tv.setText(editNum.getText());
-                Log.d("SafetyApp", "Dialog: "+dialog);
                 if(!(tv.getText().toString().trim().length() == 0)){
                     bt.setText(EDIT);
                 } else {
                     bt.setText(ADD);
                 }
-                numbers[i] = tv.getText().toString();
+
+                if(i == 0){
+                    String textPolice = editNum.getText().toString().trim();
+                    if (myDB.checkIfDataExists("my_authority", "authority_name", "Police")){
+                        int indexPolice = getPosition("Police");
+                        String policeID = authorityList.get(indexPolice).getID();
+                        myDB.updateAuthorityNumber(policeID, textPolice);
+                        if(indexPolice != 3){
+                            authorityList.get(indexPolice).updateNumber(editNum.getText().toString().trim());
+                        }
+                    } else {
+                        long result = myDB.addAuthority("Police", textPolice, false);
+                        Authority newAuthority = new Authority(String.valueOf(result),
+                                "Police",
+                                textPolice, false);
+                        authorityList.add(newAuthority);
+
+                    }
+                } else if(i == 1){
+                    String textFire = editNum.getText().toString().trim();
+                    if (myDB.checkIfDataExists("my_authority", "authority_name", "Fire")){
+                        int indexFire = getPosition("Fire");
+                        String fireID = authorityList.get(indexFire).getID();
+                        myDB.updateAuthorityNumber(fireID, textFire);
+                        if(indexFire != 3)
+                            authorityList.get(indexFire).updateNumber(editNum.getText().toString().trim());
+
+                    } else {
+                        long result = myDB.addAuthority("Fire", textFire, false);
+                        Authority newAuthority = new Authority(String.valueOf(result),
+                                "Fire",
+                                textFire, false);
+                        authorityList.add(newAuthority);
+                    }
+                }  else if(i == 2){
+                    String textHospital = editNum.getText().toString().trim();
+                    if (myDB.checkIfDataExists("my_authority", "authority_name", "Hospital")){
+                        int indexHospital = getPosition("Hospital");
+                        String hospitalID = authorityList.get(indexHospital).getID();
+                        myDB.updateAuthorityNumber(hospitalID, textHospital);
+                        if(indexHospital != 3)
+                            authorityList.get(indexHospital).updateNumber(editNum.getText().toString().trim());
+                    } else {
+                        long result = myDB.addAuthority("Hospital", textHospital, false);
+                        Authority newAuthority = new Authority(String.valueOf(result),
+                                "Hospital",
+                                textHospital, false);
+                        authorityList.add(newAuthority);
+
+                    }
+                }
+
             }
         });
 
@@ -169,30 +284,141 @@ public class EmergencyServicesSettings extends AppCompatActivity {
         });
     }
 
+    private void storeDataInArrays(){
+        Cursor cursor = myDB.readAllData();
+        boolean isDefault;
+        String defaultNumber = "";
+
+        while (cursor.moveToNext()){
+            isDefault = false;
+            if(cursor.getString(3).equals("1")){
+                isDefault = true;
+                defaultNumber = cursor.getString(1);
+            }
+            Authority newAuthority = new Authority(cursor.getString(0),
+                    cursor.getString(1),
+                    cursor.getString(2), isDefault);
+            authorityList.add(newAuthority);
+                if (isDefault){
+                    int pos = getPosition(defaultNumber);
+                    defaultTv.setText(authorityList.get(pos).getContactNo());
+                }
+        }
+
+
+    }
+
+    /*
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1){
+            recreate();
+        }
+    }
+
+    */
+
+    private boolean checkIfEmpty(String name){
+        int i;
+        int index = 0;
+        boolean isEmpty = false;
+        String authorityNumber, authorityName;
+
+        for (i = 0; i < authorityList.size(); i++){
+            authorityName = authorityList.get(i).getName();
+            if(authorityName.equals(name)){
+                authorityNumber = authorityList.get(i).getContactNo();
+                if(authorityNumber.length() == 0){
+                    isEmpty = true;
+                }
+            }
+        }
+
+        return isEmpty;
+    }
+
+    private int getPosition(String name){
+        int i;
+        int index = 0;
+        boolean isFound = false;
+        String authorityName;
+
+        for (i = 0; i < authorityList.size(); i++){
+            authorityName = authorityList.get(i).getName();
+            if(authorityName.equals(name)){
+                isFound = true;
+                index = i;
+            }
+        }
+
+        if (!isFound)
+            index = 3;
+        return index;
+    }
+
+    private void updateDefault(String name){
+        int i;
+        String authorityName;
+
+        for (i = 0; i < authorityList.size(); i++){
+            authorityName = authorityList.get(i).getName();
+            if(!(authorityName.equals(name))){
+                if(authorityList.get(i).getIsDefault()){
+                    authorityList.get(i).updateIsDefault(false);
+                }
+            }
+        }
+    }
+
     @Override
     protected void onStart(){
         super.onStart();
 
-        // modify text of buttons
-        if(numbers[0].length() == 0){
-            Log.d("SafetyApp", "Text is empty.");
+        int indexHospital = getPosition("Hospital");
+        int indexFire = getPosition("Fire");
+        int indexPolice = getPosition("Police");
+
+        // modify text of buttons and textviews
+        if(indexHospital == 3){
             hospitalActionBtn.setText(ADD);
         } else {
-            Log.d("SafetyApp", "Text is: "+hospitalTv.getText().toString());
-            hospitalActionBtn.setText(EDIT);
+            if(checkIfEmpty("Hospital")){
+                hospitalActionBtn.setText(ADD);
+            } else {
+                hospitalActionBtn.setText(EDIT);
+                hospitalTv.setText(authorityList.get(indexHospital).getContactNo());
+            }
         }
 
-        if(numbers[1].length() == 0){
-            policeActionBtn.setText(ADD);
-        } else {
-            policeActionBtn.setText(EDIT);
-        }
-
-        if(numbers[2].length() == 0){
+        if(indexFire == 3){
             fireActionBtn.setText(ADD);
         } else {
-            fireActionBtn.setText(EDIT);
+            if(checkIfEmpty("Fire")){
+                fireActionBtn.setText(ADD);
+            } else {
+                fireActionBtn.setText(EDIT);
+                fireTv.setText(authorityList.get(indexFire).getContactNo());
+            }
+
         }
 
+        if(indexPolice == 3){
+            policeActionBtn.setText(ADD);
+        } else {
+            if(checkIfEmpty("Police")){
+                policeActionBtn.setText(ADD);
+            } else {
+                policeActionBtn.setText(EDIT);
+                policeTv.setText(authorityList.get(indexPolice).getContactNo());
+            }
+
+        }
+
+    }
+
+    protected void onDestroy(){
+        super.onDestroy();
+        finish();
     }
 }
