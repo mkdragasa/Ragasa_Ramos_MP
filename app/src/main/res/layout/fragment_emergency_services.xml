@@ -45,7 +45,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ib_earthquake" />
+        app:layout_constraintTop_toBottomOf="@+id/ib_police" />
 
     <TextView
         android:id="@+id/textView4"
@@ -57,7 +57,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ib_flood" />
+        app:layout_constraintTop_toBottomOf="@+id/ib_hospital" />
 
     <ImageButton
         android:id="@+id/ib_fire"
@@ -76,7 +76,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
-        android:id="@+id/ib_flood"
+        android:id="@+id/ib_hospital"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginBottom="208dp"
@@ -92,7 +92,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
-        android:id="@+id/ib_earthquake"
+        android:id="@+id/ib_police"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginEnd="35dp"

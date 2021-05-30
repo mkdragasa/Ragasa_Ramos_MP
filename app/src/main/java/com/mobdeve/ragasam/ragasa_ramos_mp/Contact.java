@@ -4,21 +4,24 @@ public class Contact{
     String id;
     String name;
     String contactNo;
-    long defaultMessageId;
+    String message;
+    boolean shareLocation;
 
-    public Contact(String id, String name, String contactNo) {
+    public Contact(String id, String name, String contactNo, String message, boolean shareLocation) {
         this.id = id;
         this.name = name;
         this.contactNo = contactNo;
+        this.message = message;
+        this.shareLocation = shareLocation;
     }
 
     public void updateContactName(String name){this.name = name;}
 
     public void updateContactNo(String contactNo){this.contactNo = contactNo;}
 
-    public void setDefaultMessage(long defaultMessageId) {
-        this.defaultMessageId = defaultMessageId;
-    }
+    public void updateMessage(String message){this.message = message;}
+
+    public void updateShareLocation(boolean shareLocation){this.shareLocation = shareLocation;}
 
     public String getContactID(){return this.id;}
 
@@ -26,5 +29,7 @@ public class Contact{
 
     public String getContactNo(){return this.contactNo;}
 
-    public long getIsDefaultMessageID(){return this.defaultMessageId;}
+    public String getMessage(){return this.message;}
+
+    public boolean getShareLocation(){return this.shareLocation;}
 }

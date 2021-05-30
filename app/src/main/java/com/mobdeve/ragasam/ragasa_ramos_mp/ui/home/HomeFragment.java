@@ -5,9 +5,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,9 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.mobdeve.ragasam.ragasa_ramos_mp.Authority;
+import com.mobdeve.ragasam.ragasa_ramos_mp.MyDatabaseHelper;
 import com.mobdeve.ragasam.ragasa_ramos_mp.R;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -38,13 +43,15 @@ import java.util.List;
 import java.util.Locale;
 
 public class HomeFragment extends Fragment {
-
+    MyDatabaseHelper myDB;
     private HomeViewModel homeViewModel;
     private ImageButton ib_call, ib_text;
     private static final int REQUEST_CODE = 1;
     FusedLocationProviderClient fusedLocationProviderClient;
     private Context context;
     private Activity mActivity;
+    private String emergencyNumber;
+    private final String EMERGENCY_HOTLINE = "111"; // change to 911
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
@@ -54,8 +61,12 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         context = inflater.getContext();
         mActivity = this.getActivity();
+        myDB = MyDatabaseHelper.newInstance(mActivity);
+
         // Initialize views
         initializeViews(root);
+
+        storeData();
         // Set OnClickListeners
         setOnClickListeners();
 
@@ -70,7 +81,18 @@ public class HomeFragment extends Fragment {
         ib_text = root.findViewById(R.id.ib_text);
     }
 
-    private void setOnClickListeners() {
+    private void storeData(){
+        Cursor cursor = myDB.readAllData();
+        emergencyNumber = EMERGENCY_HOTLINE;
+
+        while (cursor.moveToNext()) {
+            if (cursor.getString(3).equals("1"))
+                emergencyNumber = cursor.getString(2);
+        }
+
+    }
+
+    private void setOnClickListeners(){
         ib_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +107,8 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
+
 
     private void sendSMS(){
         //***CHANGE THIS****
@@ -119,12 +143,11 @@ public class HomeFragment extends Fragment {
     }
 
     private void callNumber(){
-        String number = "09278744265";
 
-        if(number.trim().length() > 0){
+        if(emergencyNumber.trim().length() > 0){
             if(ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED){
                 try {
-                    String dial = "tel:" + number;
+                    String dial = "tel:" + emergencyNumber;
                     Intent intent = new Intent(Intent.ACTION_CALL);
                     intent.setData(Uri.parse(dial));
                     startActivity(intent);

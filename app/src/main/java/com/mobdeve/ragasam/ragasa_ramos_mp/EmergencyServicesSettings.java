@@ -42,7 +42,8 @@ public class EmergencyServicesSettings extends AppCompatActivity {
         setContentView(R.layout.activity_emergency_services_settings);
 
         authorityList = new ArrayList<>();
-        myDB = new MyDatabaseHelper(EmergencyServicesSettings.this);
+        myDB = MyDatabaseHelper.newInstance(EmergencyServicesSettings.this);
+        Log.d("SafetyApp", "IN SETTINGS..");
         init();
         storeDataInArrays();
         setOnClickListeners();
@@ -230,6 +231,17 @@ public class EmergencyServicesSettings extends AppCompatActivity {
                         if(indexPolice != CHECK_KEY){
                             authorityList.get(indexPolice).updateNumber(editNum.getText().toString().trim());
                         }
+
+                        if(textPolice.length() == 0){
+                            if(authorityList.get(indexPolice).getIsDefault()){
+                                myDB.updateAuthorityDefault(policeID, false);
+                                authorityList.get(indexPolice).updateIsDefault(false);
+                                defaultTv.setText("911");
+                                nationalDefaultBtn.setEnabled(false);
+                                policeDefaultBtn.setEnabled(true);
+                            }
+                        }
+
                     } else {
                         long result = myDB.addAuthority(POLICE_KEY, textPolice, false);
                         Authority newAuthority = new Authority(String.valueOf(result),
@@ -247,6 +259,16 @@ public class EmergencyServicesSettings extends AppCompatActivity {
                         if(indexFire != CHECK_KEY)
                             authorityList.get(indexFire).updateNumber(editNum.getText().toString().trim());
 
+                        if(textFire.length() == 0){
+                            if(authorityList.get(indexFire).getIsDefault()){
+                                myDB.updateAuthorityDefault(fireID, false);
+                                authorityList.get(indexFire).updateIsDefault(false);
+                                defaultTv.setText("911");
+                                nationalDefaultBtn.setEnabled(false);
+                                fireDefaultBtn.setEnabled(true);
+                            }
+                        }
+
                     } else {
                         long result = myDB.addAuthority("Fire", textFire, false);
                         Authority newAuthority = new Authority(String.valueOf(result),
@@ -262,6 +284,17 @@ public class EmergencyServicesSettings extends AppCompatActivity {
                         myDB.updateAuthorityNumber(hospitalID, textHospital);
                         if(indexHospital != CHECK_KEY)
                             authorityList.get(indexHospital).updateNumber(editNum.getText().toString().trim());
+
+                        if(textHospital.length() == 0){
+                            if(authorityList.get(indexHospital).getIsDefault()){
+                                myDB.updateAuthorityDefault(hospitalID, false);
+                                authorityList.get(indexHospital).updateIsDefault(false);
+                                defaultTv.setText("911");
+                                nationalDefaultBtn.setEnabled(false);
+                                hospitalDefaultBtn.setEnabled(true);
+                            }
+                        }
+
                     } else {
                         long result = myDB.addAuthority(HOSPITAL_KEY, textHospital, false);
                         Authority newAuthority = new Authority(String.valueOf(result),
