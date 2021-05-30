@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -22,6 +23,7 @@ public class ContactsFragment extends Fragment {
     private RecyclerView recyclerView;
     private ContactsAdapter contactsAdapter;
     private ArrayList<Contacts> contactsArrayList = new ArrayList<>();
+    private Button addContactBtn;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -46,6 +48,15 @@ public class ContactsFragment extends Fragment {
         contactsAdapter = new ContactsAdapter(this.contactsArrayList);
         this.recyclerView.setAdapter(this.contactsAdapter);
 
+        addContactBtn = (Button) context.findViewById(R.id.btn_addContact);
+
+
+        addContactBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
 
     }
 
@@ -89,5 +100,10 @@ public class ContactsFragment extends Fragment {
         contacts.setMessage("6 Message");
         contactsArrayList.add(0, contacts);
 
+    }
+
+    public void openDialog(){
+        AddContactsDialog addDialog = new AddContactsDialog();
+        addDialog.show(getFragmentManager() ,"Add Contacts");
     }
 }

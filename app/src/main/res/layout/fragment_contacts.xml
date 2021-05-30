@@ -11,21 +11,10 @@
         android:id="@+id/btn_addContact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
         android:layout_marginTop="40dp"
         android:text="ADD CONTACT"
-        app:layout_constraintEnd_toStartOf="@+id/btn_CustomMessage"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_contacts" />
-
-    <Button
-        android:id="@+id/btn_CustomMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="60dp"
-        android:text="CUSTOM MESSAGE"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rv_contacts" />
 
     <androidx.recyclerview.widget.RecyclerView
