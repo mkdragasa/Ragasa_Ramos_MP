@@ -1,4 +1,4 @@
-package com.mobdeve.ragasam.ragasa_ramos_mp;
+package com.mobdeve.ragasam.ragasa_ramos_mp.ui.contacts;
 
 public class Contact{
     String id;

@@ -1,5 +1,6 @@
 package com.mobdeve.ragasam.ragasa_ramos_mp.ui.contacts;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,7 +13,7 @@ import com.mobdeve.ragasam.ragasa_ramos_mp.R;
 public class ContactsViewHolder extends RecyclerView.ViewHolder {
 
     private TextView name, number, message;
-    private Button callBtn, editBtn, textBtn;
+    public Button callBtn, textBtn, editBtn;
 
     public ContactsViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -20,6 +21,19 @@ public class ContactsViewHolder extends RecyclerView.ViewHolder {
         this.name = itemView.findViewById(R.id.tv_ContactName);
         this.number = itemView.findViewById(R.id.tv_ContactNumber);
         this.message = itemView.findViewById(R.id.tv_ContactMessage);
+
+        this.editBtn = itemView.findViewById(R.id.btn_EditContact);
+        this.callBtn = itemView.findViewById(R.id.btn_CallContact);
+        this.textBtn = itemView.findViewById(R.id.btn_TextContact);
+
+        this.textBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
     }
 
     public void setName(String name){
@@ -33,5 +47,6 @@ public class ContactsViewHolder extends RecyclerView.ViewHolder {
     public void setMessage(String message){
         this.message.setText(message);
     }
+
 
 }
