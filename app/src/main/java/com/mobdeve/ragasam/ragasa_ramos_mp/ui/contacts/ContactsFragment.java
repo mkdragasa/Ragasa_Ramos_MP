@@ -92,15 +92,14 @@ public class ContactsFragment extends Fragment implements AddContactsDialog.AddC
     }
 
     private void storeDataInArray(){
-        Log.d("SafeApp", "STORING.. ");
         Cursor cursor = myDB.readAllContacts();
         boolean shareLocation;
-        Log.d("SafeApp", "data in db: "+cursor.getCount());
         while (cursor.moveToNext()){
             shareLocation = false;
-            if(cursor.getString(3).equals("1")){
+            if(cursor.getString(4).equals("1")){
                 shareLocation = true;
             }
+
             Contact newContact = new Contact(cursor.getString(0),
                     cursor.getString(1),
                     cursor.getString(2), cursor.getString(3), shareLocation);
@@ -108,50 +107,6 @@ public class ContactsFragment extends Fragment implements AddContactsDialog.AddC
         }
 
     }
-
-
-    /*
-    public void generateData(){
-
-        contactsArrayList = new ArrayList<>();
-
-        Contacts contacts = new Contacts();
-        contacts.setName("Kyla");
-        contacts.setNumber("09171231234");
-        contacts.setMessage("1 Message");
-        contactsArrayList.add(0, contacts);
-
-        contacts = new Contacts();
-        contacts.setName("Alex");
-        contacts.setNumber("09171231234");
-        contacts.setMessage("2 Message");
-        contactsArrayList.add(0, contacts);
-
-        contacts = new Contacts();
-        contacts.setName("Milo");
-        contacts.setNumber("09171231234");
-        contacts.setMessage("3 Message");
-        contactsArrayList.add(0, contacts);
-
-        contacts = new Contacts();
-        contacts.setName("Frankie");
-        contacts.setNumber("09171231234");
-        contacts.setMessage("4 Message");
-        contactsArrayList.add(0, contacts);
-
-        contacts = new Contacts();
-        contacts.setName("Hershey");
-        contacts.setNumber("09171231234");
-        contacts.setMessage("5 Message");
-        contactsArrayList.add(0, contacts);
-
-        contacts = new Contacts();
-        contacts.setName("Cookie");
-        contacts.setNumber("09171231234");
-        contacts.setMessage("6 Message");
-        contactsArrayList.add(0, contacts);
-
-    } */
 
     public void openDialog(){
         AddContactsDialog addDialog = new AddContactsDialog();
@@ -182,7 +137,6 @@ public class ContactsFragment extends Fragment implements AddContactsDialog.AddC
                 name,
                 number, message, shareLocation);
         contactsArrayList.add(newContact);
-        Log.d("SafeApp", "ADDED IN DB"+contactsArrayList.get(0));
 
         contactsAdapter.notifyDataSetChanged();
 
