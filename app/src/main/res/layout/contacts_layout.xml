@@ -67,12 +67,12 @@
 
     <TextView
         android:id="@+id/tv_ContactMessage"
-        android:layout_width="372dp"
-        android:layout_height="31dp"
-        android:layout_marginStart="10dp"
+        android:layout_width="369dp"
+        android:layout_height="28dp"
         android:layout_marginTop="8dp"
-        android:maxLines="2"
+        android:maxLines="1"
         android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_ContactNumber" />
 
