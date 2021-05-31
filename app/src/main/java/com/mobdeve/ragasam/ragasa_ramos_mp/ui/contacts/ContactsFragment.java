@@ -56,7 +56,7 @@ public class ContactsFragment extends Fragment implements AddContactsDialog.AddC
         this.recyclerView.setLayoutManager(linearLayoutManager);
 
         //Adapter
-        contactsAdapter = new ContactsAdapter(this.contactsArrayList, getContext(), getActivity());
+        contactsAdapter = new ContactsAdapter(this.contactsArrayList, getContext(), getActivity(), getFragmentManager());
         this.recyclerView.setAdapter(this.contactsAdapter);
 
         addContactBtn = (Button) mActivity.findViewById(R.id.btn_addContact);
@@ -112,26 +112,11 @@ public class ContactsFragment extends Fragment implements AddContactsDialog.AddC
         AddContactsDialog addDialog = new AddContactsDialog();
         addDialog.setListener(ContactsFragment.this);
         addDialog.show(getFragmentManager() ,"Add Contacts");
-        Log.d("SafeApp", "OPENING DIALOG ");
     }
 
-    /*
-    public void openUpdateDialog(){
-        AddContactsDialog addDialog = new AddContactsDialog();
-        addDialog.setUpdateListener(ContactsFragment.this, name, contactNo, message shareLocation);
-        addDialog.show(getFragmentManager() ,"EditContacts");
-        Log.d("SafeApp", "OPENING DIALOG ");
-    }*/
-
     @Override
-    public void applyTexts(String name, String number, String message, boolean shareLocation) {
-                /*
-        String name = contactsArrayList.get(index).getContactName();
-        String number = contactsArrayList.get(index).getContactNo();
-        String message = contactsArrayList.get(index).getMessage();
-        boolean shareLocation = contactsArrayList.get(index).getShareLocation();
-        long result = addContact(name, number, message, shareLocation); */
-        Log.d("SafeApp", "IN CONTACTSFRAGMENT "+shareLocation);
+    public void applyTexts(String name, String number, String message, boolean shareLocation, String _id) {
+
         long result = myDB.addContact(name, number, message, shareLocation);
         Contact newContact = new Contact(String.valueOf(result),
                 name,
@@ -141,4 +126,6 @@ public class ContactsFragment extends Fragment implements AddContactsDialog.AddC
         contactsAdapter.notifyDataSetChanged();
 
     }
+
+
 }

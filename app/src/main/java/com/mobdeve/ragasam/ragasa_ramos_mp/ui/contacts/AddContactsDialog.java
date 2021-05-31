@@ -24,11 +24,11 @@ public class AddContactsDialog extends AppCompatDialogFragment {
     private EditText name, number, message;
     private Switch shareLocation;
     private AddContactsDialogListener listener;
+    private String _id;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        Log.d("SafeApp", "DIALOG OPENED");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -38,9 +38,21 @@ public class AddContactsDialog extends AppCompatDialogFragment {
         number = view.findViewById(R.id.et_ContactNumber);
         message = view.findViewById(R.id.et_CustomMessage);
         shareLocation = view.findViewById(R.id.switch_ShareLocation);
+        _id = "";
+
+        Bundle mArgs = getArguments();
+       if(mArgs != null){
+           _id = mArgs.getString("ID");
+           name.setText(mArgs.getString("name"));
+           number.setText(mArgs.getString("number"));
+           message.setText(mArgs.getString("message"));
+           shareLocation.setChecked(mArgs.getBoolean("isShare"));
+           builder.setTitle("Edit Contact");
+       } else {
+           builder.setTitle("Add Contact");
+       }
 
         builder.setView(view)
-                .setTitle("Add Contacts")
                 .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -50,31 +62,27 @@ public class AddContactsDialog extends AppCompatDialogFragment {
                 .setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                         String person = name.getText().toString();
                         String contactNo = number.getText().toString();
                         String text = message.getText().toString();
                         boolean isShare = shareLocation.isChecked();
-                        listener.applyTexts(person, contactNo, text, isShare);
+                        listener.applyTexts(person, contactNo, text, isShare, _id);
 
                     }
                 });
+
 
         return builder.create();
     }
 
     public interface AddContactsDialogListener {
-        void applyTexts(String name, String number, String message, boolean shareLocation);
+        void applyTexts(String name, String number, String message, boolean shareLocation, String _id);
     }
 
     public void setListener(AddContactsDialogListener listener){
         this.listener = listener;
     }
 
-    public void setUpdateListener(AddContactsDialogListener listener, String name, String contactNo, String message, boolean isShare){
-        this.listener = listener;
-        this.name.setText(name);
-        this.number.setText(contactNo);
-        this.message.setText(message);
-        this.shareLocation.setChecked(isShare);
-    }
+
 }

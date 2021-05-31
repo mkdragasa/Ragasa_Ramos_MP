@@ -43,7 +43,7 @@ public class EmergencyServicesSettings extends AppCompatActivity {
 
         authorityList = new ArrayList<>();
         myDB = MyDatabaseHelper.newInstance(EmergencyServicesSettings.this);
-        Log.d("SafetyApp", "IN SETTINGS..");
+
         init();
         storeDataInArrays();
         setOnClickListeners();

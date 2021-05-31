@@ -2,6 +2,8 @@ package com.mobdeve.ragasam.ragasa_ramos_mp.ui.contacts;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,18 +12,24 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
 import android.telephony.SmsManager;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -36,26 +44,34 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.mobdeve.ragasam.ragasa_ramos_mp.MyDatabaseHelper;
+import com.mobdeve.ragasam.ragasa_ramos_mp.NavigationBar;
 import com.mobdeve.ragasam.ragasa_ramos_mp.R;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class ContactsAdapter extends RecyclerView.Adapter<ContactsViewHolder> {
+public class ContactsAdapter extends RecyclerView.Adapter<ContactsViewHolder> implements AddContactsDialog.AddContactsDialogListener {
 
     private final int REQUEST_CODE = 1;
+    private FragmentManager fragmentManager;
     private ArrayList<Contact> contactsArrayList;
     private Context context;
     private Activity activity;
     private static String addressLocation;
     private FusedLocationProviderClient fusedLocationProviderClient;
+    private String updateName, updateNumber, updateMessage, updateID;
+    private boolean updateLocation;
+    private MyDatabaseHelper myDB;
 
 
-    public ContactsAdapter(ArrayList<Contact> data, Context context, Activity activity){
+    public ContactsAdapter(ArrayList<Contact> data, Context context, Activity activity, FragmentManager fragmentManager){
         this.contactsArrayList = data;
         this.context = context;
         this.activity = activity;
+        this.fragmentManager = fragmentManager;
+        myDB = MyDatabaseHelper.newInstance(activity);
 
     }
 
@@ -75,6 +91,8 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsViewHolder> {
         holder.setNumber(this.contactsArrayList.get(position).getContactNo());
         holder.setMessage(this.contactsArrayList.get(position).getMessage());
 
+        String _id = this.contactsArrayList.get(position).getContactID();
+        String name = this.contactsArrayList.get(position).getContactName();
         String message = this.contactsArrayList.get(position).getMessage();
         String number = this.contactsArrayList.get(position).getContactNo();
         boolean shareLocation = this.contactsArrayList.get(position).getShareLocation();
@@ -126,12 +144,33 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsViewHolder> {
             }
         });
 
+        // edit contact
+        holder.editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle args = new Bundle();
+                args.putString("name", name);
+                args.putString("number", number);
+                args.putString("message", message);
+                args.putBoolean("isShare", shareLocation);
+                args.putString("ID", _id);
+
+                AddContactsDialog addDialog = new AddContactsDialog();
+                addDialog.setArguments(args);
+                addDialog.setListener(ContactsAdapter.this::applyTexts);
+                addDialog.show(fragmentManager,"Edit Contact");
+
+            }
+        });
+
+
     }
 
     @Override
     public int getItemCount() {
         return this.contactsArrayList.size();
     }
+
 
     private void sendMessageLocation(String textMessage, String number){
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
@@ -248,6 +287,26 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsViewHolder> {
                sendSMS(textMessage, number);
            }
        }
+
+
+    @Override
+    public void applyTexts(String name, String number, String message, boolean shareLocation, String id) {
+       updateName = name;
+       updateNumber = number;
+       updateMessage = message;
+       updateLocation = shareLocation;
+       updateID = id;
+
+       myDB.updateContact(id, name, number, message, shareLocation);
+       for(int i = 0; i < contactsArrayList.size(); i++){
+           if(contactsArrayList.get(i).getContactID().equals(name)){
+               contactsArrayList.get(i).updateContact(name, number, message, shareLocation);
+           }
+       }
+
+        Log.d("SafeApp","CHANGED");
+
+    }
 
 
 }

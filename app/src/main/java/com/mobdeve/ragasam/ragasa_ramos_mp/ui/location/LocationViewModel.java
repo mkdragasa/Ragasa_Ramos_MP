@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class LocationViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
 
     private MutableLiveData<String> mText;
 

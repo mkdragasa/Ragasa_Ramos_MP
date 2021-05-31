@@ -50,7 +50,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.mobdeve.ragasam.ragasa_ramos_mp.SafetyGuidelines;
 import com.mobdeve.ragasam.ragasa_ramos_mp.ui.contacts.Contact;
-import com.mobdeve.ragasam.ragasa_ramos_mp.ui.contacts.Contacts;
 import com.mobdeve.ragasam.ragasa_ramos_mp.ui.contacts.ContactsFragment;
 import com.mobdeve.ragasam.ragasa_ramos_mp.ui.emergencyServices.EmergencyServicesFragment;
 import com.mobdeve.ragasam.ragasa_ramos_mp.ui.guidelines.GuidelinesFragment;
@@ -63,7 +62,7 @@ import java.util.Locale;
 
 public class HomeFragment extends Fragment {
     private static final int REQUEST_CODE = 1;
-    private final String EMERGENCY_HOTLINE = "111"; // change to 911
+    private final String EMERGENCY_HOTLINE = "911";
 
     private MyDatabaseHelper myDB;
     private HomeViewModel homeViewModel;
@@ -124,7 +123,6 @@ public class HomeFragment extends Fragment {
         cursor = myDB.readAllContacts();
         boolean shareLocation;
         while (cursor.moveToNext()){
-            Log.d("SafeApp", "in HOME FRAGMENT db: "+ cursor.getString(1));
             shareLocation = false;
             if(cursor.getString(4).equals("1")){
                 shareLocation = true;
@@ -198,8 +196,7 @@ public class HomeFragment extends Fragment {
             if (ContextCompat.checkSelfPermission(context, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
                 try {
                     SmsManager mySmsManager = SmsManager.getDefault();
-                    //mySmsManager.sendTextMessage(number, null, message, null, null);
-                    Log.d("SafeApp","message is in HOME FRAGMENT no location "+message);
+                    mySmsManager.sendTextMessage(number, null, message, null, null);
                     count = 1;
 
                 } catch (Exception e) {

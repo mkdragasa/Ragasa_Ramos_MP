@@ -51,8 +51,7 @@ public class LocationFragment extends Fragment {
     private LocationViewModel locationModel;
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient fusedLocationProviderClient;
-    /*Spinner spType;
-    Button findBtn; */
+
     GoogleMap map;
     double currentLat = 0, currentLong = 0;
     private Context context;
@@ -83,33 +82,6 @@ public class LocationFragment extends Fragment {
     }
 
     private void getLocation(){
-/*
-        if(ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            Task<Location> task = fusedLocationProviderClient.getLastLocation();
-            task.addOnSuccessListener(new OnSuccessListener<Location>() {
-                @Override
-                public void onSuccess(Location location) {
-                    Log.d("App", "IN LocationFragment: "+location);
-                    if (location != null){
-                        currentLat = location.getLatitude();
-                        currentLong = location.getLongitude();
-
-                        supportMapFragment.getMapAsync(new OnMapReadyCallback() {
-                            @Override
-                            public void onMapReady(@NonNull GoogleMap googleMap) {
-                                map = googleMap;
-                                LatLng latLng = new LatLng(currentLat, currentLong);
-                                MarkerOptions options = new MarkerOptions().position(latLng).title("You are here");
-                                map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-                                map.addMarker(options);
-                            }
-                        });
-                    }
-                }
-            });
-        } else {
-            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        } */
 
         if(ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
@@ -121,7 +93,6 @@ public class LocationFragment extends Fragment {
                         @Override
                         public void onComplete(@NonNull Task<Location> task) {
                             Location location = task.getResult();
-                            Log.d("App", "LOCATION: "+location);
                             if (location != null){
                                 currentLat = location.getLatitude();
                                 currentLong = location.getLongitude();
@@ -139,7 +110,6 @@ public class LocationFragment extends Fragment {
 
                             }
                             else{
-                                //Log.d("App", "Requesting location..");
                                 LocationRequest mLocationRequest = LocationRequest.create();
                                 mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
                                 mLocationRequest.setInterval(10000);
@@ -148,12 +118,11 @@ public class LocationFragment extends Fragment {
                                 LocationCallback mLocationCallback = new LocationCallback() {
                                     @Override
                                     public void onLocationResult(LocationResult locationResult) {
-                                        //Log.d("App", "CALLBACK Requesting location..");
                                         Location location1 = locationResult.getLastLocation();
                                         Geocoder geocoder = new Geocoder(mActivity, Locale.getDefault());
                                         try {
-                                            currentLat = location.getLatitude();
-                                            currentLong = location.getLongitude();
+                                            currentLat = location1.getLatitude();
+                                            currentLong = location1.getLongitude();
 
                                             supportMapFragment.getMapAsync(new OnMapReadyCallback() {
                                                 @Override

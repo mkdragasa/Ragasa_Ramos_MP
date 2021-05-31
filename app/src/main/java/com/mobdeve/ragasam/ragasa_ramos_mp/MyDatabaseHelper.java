@@ -46,7 +46,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.d("SafetyApp", "creating table..");
         String query = "CREATE TABLE " + TABLE_NAME +
                 " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_NAME + " TEXT, " +
@@ -54,7 +53,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_ISDEFAULT + " BOOLEAN);";
         db.execSQL(query);
 
-        Log.d("SafetyApp", "creating table 2..");
         query = "CREATE TABLE " + TABLE_NAME2 +
                 " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_PERSON + " TEXT, " +
@@ -205,9 +203,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_NUMBER2, number);
         cv.put(COLUMN_MESSAGE, message);
         cv.put(COLUMN_LOCATION, shareLocation);
-        long result = db.update(TABLE_NAME2, cv, "_id!=?", new String[]{row_id});
+        long result = db.update(TABLE_NAME2, cv, "_id=?", new String[]{row_id});
         if(result != -1) {
-            Toast.makeText(context, "Successfully Added!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Successfully Updated!", Toast.LENGTH_SHORT).show();
         }
 
     }

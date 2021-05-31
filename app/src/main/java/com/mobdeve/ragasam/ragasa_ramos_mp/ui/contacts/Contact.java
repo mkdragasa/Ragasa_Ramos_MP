@@ -23,6 +23,13 @@ public class Contact{
 
     public void updateShareLocation(boolean shareLocation){this.shareLocation = shareLocation;}
 
+    public void updateContact(String name, String contactNo, String message, boolean shareLocation) {
+        this.name = name;
+        this.contactNo = contactNo;
+        this.message = message;
+        this.shareLocation = shareLocation;
+    }
+
     public String getContactID(){return this.id;}
 
     public String getContactName(){return this.name;}
