@@ -65,14 +65,6 @@ public class LocationFragment extends Fragment {
         context = inflater.getContext();
         mActivity = this.getActivity();
 
-        /*
-        final TextView textView = root.findViewById(R.id.text_location);
-        locationModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        }); */
 
         supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.google_map);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
