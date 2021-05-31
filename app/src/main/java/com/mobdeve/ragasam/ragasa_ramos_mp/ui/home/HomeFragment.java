@@ -275,6 +275,7 @@ public class HomeFragment extends Fragment {
                                                 if(shareLocation){
                                                     newMessage = message  + "\n" + "Location: " +addressLocation;
                                                     mySmsManager.sendTextMessage(number, null, newMessage, null, null);
+
                                                 } else {
                                                     mySmsManager.sendTextMessage(number, null, message, null, null);
                                                 }
@@ -321,6 +322,7 @@ public class HomeFragment extends Fragment {
                                                         if(shareLocation){
                                                             newMessage = message  + "\n" + "Location: " +addressLocation;
                                                             mySmsManager.sendTextMessage(number, null, newMessage, null, null);
+
                                                         } else {
                                                             mySmsManager.sendTextMessage(number, null, message, null, null);
                                                         }
